@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <style>
+   body {
+    margin: 0;
+    padding: 0;
+    background-color: #fefdfd; /* fundo do fundo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+.screen {
+    width: 1600px; /* Largura ajustada */
+    height: 1000px; /* Altura ajustada */
+    background: linear-gradient(to bottom right, #0E0E0E, #00FF00); /* Degradê de preto para roxo */
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.top-bar {
+    width: 100%;
+    height: 80px;
+    background-color: #1c1c1c;
+    display: flex;
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: center;
+    color: #fff;
+    font-size: 22px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.top-bar .menu-container {
+    display: flex;
+    gap: 50px;
+}
+.top-bar .menu-container span {
+    color: #f6f9f6; /* cor das palavras */
+    cursor: pointer;
+    background-color: #00FF00; /* Cor de fundo da palavra */
+    padding: 10px 20px; /* Espaçamento interno */
+    border-radius: 20px; /* Bordas arredondadas */
+    font-size: 18px; /* Ajuste de tamanho da fonte */
+}
+.top-bar .menu-container span:hover {
+    background-color: #333; /* Cor de fundo ao passar o mouse */
+}
+.top-bar .profile-button {
+    width: 60px;
+    height: 60px;
+    background: url('https://via.placeholder.com/480x270') no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    position: absolute;
+    left: 50px; /* Espaçamento à esquerda para o perfil */
+    cursor: pointer;
+}
+.menu {
+    display: none;
+    position: absolute;
+    top: 80px; /* Alinha com a barra superior */
+    left: 0;
+    width: 200px;
+    background-color: #1c1c1c;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+.menu a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #333;
+    transition: background-color 0.3s ease; /* Transição suave de cor */
+}
+/* Cores ao passar o mouse */
+.menu a:nth-child(1):hover {
+    background-color: #00FF00; /* Verde */
+}
+.menu a:nth-child(2):hover {
+    background-color: #ff0000; /* Azul */
+}
+.menu a:nth-child(3):hover {
+    background-color: hsl(233, 100%, 50%); /* Vermelho */
+}
+.menu a:nth-child(4):hover {
+    background-color: #FFFF00; /* Amarelo */
+}
+.menu a:nth-child(5):hover {
+    background-color: #00ff9d; /* Azul */
+}
+.menu a:nth-child(6):hover {
+        background-color: #950bff; /* rosa */
+}
+.menu a:nth-child(7):hover {
+    background-color: #950bff; /* laranja */
+}
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+    padding: 90px 50px 50px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 80px;
+    bottom: 80px;
+    left: 50px;
+    right: 50px;
+}
+.video {
+    width: 100%;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.video::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* Proporção 16:9 */
+}
+.video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.video-icons {
+    display: flex;
+    justify-content: center; /* Centraliza os ícones horizontalmente */
+    gap: 10px; /* Espaçamento reduzido entre os ícones */
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.video-icons div {
+    color: #fff;
+    font-size: 18px; /* Tamanho do ícone ajustado para ser mais minimalista */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o ícone verticalmente */
+    cursor: pointer;
+}
+.bottom-bar {
+    width: 100%;
+    height: 80px;
+    background-color: #1c1c1c;
+    display: flex;
+    justify-content: space-around; /* Ajusta a distribuição dos ícones */
+    align-items: center;
+    color: #888;
+    font-size: 28px; /* Tamanho dos ícones ajustado */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.bottom-bar i {
+    color: #888; /* Cor dos ícones */
+    margin: 0 10px; /* Espaçamento horizontal reduzido entre os ícones */
+}
+</style>
+    </style>
+    <!-- Inclua o Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="screen">
+        <div class="top-bar">
+            <div class="profile-button" onclick="toggleMenu()"></div> <!-- Botão com evento de clique -->
+            <div class="menu-container">
+                <span>Rap</span>
+                <span>Hip Hop</span>
+                <span>Rock</span>
+                <span>Funk</span>
+                <span>Samba</span>
+            </div>
+        </div>
+
+        <!-- Menu Dropdown -->
+        <div class="menu" id="dropdownMenu">
+            <a href="musica.html">Música</a>
+            <a href="filme.html">Filme</a>
+            <a href="arted.html">Artes digitais </a>
+            <a href="artef.html">Artes Físicas</a>
+            <a href="foto.html">Fotografias</a>
+            <a href="perfil.html">Prefil</a>
+            <a href="inicial.html">voltar</a>
+        </div>
+        <div class="video-grid">
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 1">
+                <div class="video-icons">
+                    <div onclick="showMessage('Comunidade')">
+                        <i class="fas fa-users"></i> <!-- Ícone de Comunidade -->
+                    </div>
+                    <div onclick="showMessage('Curtir')">
+                        <i class="fas fa-thumbs-up"></i> <!-- Ícone de Curtir -->
+                    </div>
+                    <div onclick="showMessage('Seguir')">
+                        <i class="fas fa-star"></i> <!-- Ícone de Seguir -->
+                    </div>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 2">
+                <div class="video-icons">
+                    <div onclick="showMessage('Comunidade')">
+                        <i class="fas fa-users"></i> <!-- Ícone de Comunidade -->
+                    </div>
+                    <div onclick="showMessage('Curtir')">
+                        <i class="fas fa-thumbs-up"></i> <!-- Ícone de Curtir -->
+                    </div>
+                    <div onclick="showMessage('Seguir')">
+                        <i class="fas fa-star"></i> <!-- Ícone de Seguir -->
+                    </div>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 3">
+                <div class="video-icons">
+                    <div onclick="showMessage('Comunidade')">
+                        <i class="fas fa-users"></i> <!-- Ícone de Comunidade -->
+                    </div>
+                    <div onclick="showMessage('Curtir')">
+                        <i class="fas fa-thumbs-up"></i> <!-- Ícone de Curtir -->
+                    </div>
+                    <div onclick="showMessage('Seguir')">
+                        <i class="fas fa-star"></i> <!-- Ícone de Seguir -->
+                    </div>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 4">
+                <div class="video-icons">
+                    <div onclick="showMessage('Comunidade')">
+                        <i class="fas fa-users"></i> <!-- Ícone de Comunidade -->
+                    </div>
+                    <div onclick="showMessage('Curtir')">
+                        <i class="fas fa-thumbs-up"></i> <!-- Ícone de Curtir -->
+                    </div>
+                    <div onclick="showMessage('Seguir')">
+                        <i class="fas fa-star"></i> <!-- Ícone de Seguir -->
+                    </div>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 5">
+                <div class="video-icons">
+                    <div onclick="showMessage('Comunidade')">
+                        <i class="fas fa-users"></i> <!-- Ícone de Comunidade -->
+                    </div>
+                    <div onclick="showMessage('Curtir')">
+                        <i class="fas fa-thumbs-up"></i> <!-- Ícone de Curtir -->
+                    </div>
+                    <div onclick="showMessage('Seguir')">
+                        <i class="fas fa-star"></i> <!-- Ícone de Seguir -->
+                    </div>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 6">
+                <div class="video-icons">
+                    <div onclick="showMessage('Comunidade')">
+                        <i class="fas fa-users"></i> <!-- Ícone de Comunidade -->
+                    </div>
+                    <div onclick="showMessage('Curtir')">
+                        <i class="fas fa-thumbs-up"></i> <!-- Ícone de Curtir -->
+                    </div>
+                    <div onclick="showMessage('Seguir')">
+                        <i class="fas fa-star"></i> <!-- Ícone de Seguir -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra Inferior com Font Awesome -->
+        <div class="bottom-bar">
+            <i class="fas fa-home"></i>
+            <i class="fas fa-search"></i>
+            <i class="fas fa-plus"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-comments"></i>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('dropdownMenu');
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        }
+
+        function showMessage(action) {
+            alert('Você clicou em ' + action);
+        }
+    </script>
+</body>
+</html>

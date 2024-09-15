@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carregando...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .loading-container {
+            text-align: center;
+            color: #fff;
+        }
+        .loading-logo {
+            width: 300px;
+            height: 300px;
+            background: url('Captura de tela 2024-09-15 120520.png') no-repeat center center; /* Ajuste o caminho para sua imagem */
+            background-size: cover;
+            margin-bottom: 20px;
+            animation: zoomIn 6s forwards;
+        }
+        .loading-text {
+            font-size: 24px;
+        }
+        @keyframes zoomIn {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(10); /* Altere para o valor de zoom que desejar */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="loading-logo"></div>
+        <div class="loading-text">.</div>
+    </div>
+    <script>
+        const loadingLogo = document.querySelector('.loading-logo');
+
+        loadingLogo.addEventListener('animationend', function() {
+            window.location.href = 'inicial.html'; // Redireciona para a página inicial após o zoom
+        });
+    </script>
+</body>
+</html>

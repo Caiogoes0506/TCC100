@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fefdfd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .screen {
+            width: 1600px;
+            height: 1000px;
+            background: linear-gradient(to bottom right, #121222, #5b2a8a);
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .top-bar {
+            width: 100%;
+            height: 80px;
+            background-color: #1c1c1c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 22px;
+            padding: 0 50px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .top-bar .menu-container {
+            display: flex;
+            gap: 50px;
+        }
+        .top-bar .menu-container span {
+            color: #f6f9f6;
+            cursor: pointer;
+        }
+        .top-bar .profile-button {
+            width: 60px;
+            height: 60px;
+            background: url('https://via.placeholder.com/480x270') no-repeat center center;
+            background-size: cover;
+            border-radius: 50%;
+            position: absolute;
+            left: 50px;
+            cursor: pointer;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 200px;
+            background-color: #1c1c1c;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        .menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s ease;
+        }
+        .menu a:nth-child(1):hover {
+    background-color: #00FF00; /* Verde */
+}
+.menu a:nth-child(2):hover {
+    background-color: #ff0000; /* Azul */
+}
+.menu a:nth-child(3):hover {
+    background-color: hsl(233, 100%, 50%); /* Vermelho */
+}
+.menu a:nth-child(4):hover {
+    background-color: #FFFF00; /* Amarelo */
+}
+.menu a:nth-child(5):hover {
+    background-color: #00ff9d; /* Azul */
+}
+.menu a:nth-child(6):hover {
+        background-color: #950bff; /* rosa */
+}
+.menu a:nth-child(7):hover {
+    background-color: #950bff; /* laranja */
+}
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 25px;
+            padding: 90px 50px 50px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 80px;
+            bottom: 80px;
+            left: 50px;
+            right: 50px;
+            overflow-y: auto;
+        }
+        .video {
+            width: 100%;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        .video img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .video-actions {
+            width: 100%;
+            background-color: #1c1c1c;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .video-actions i {
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .video-actions i:hover {
+            color: #fff;
+        }
+        .bottom-bar {
+            width: 100%;
+            height: 80px;
+            background-color: #1c1c1c;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: #888;
+            font-size: 28px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .bottom-bar i {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .bottom-bar i:hover {
+            color: #5b2a8a;    /* cor dos icons da parte de baixo*/
+        }
+        .search-menu {
+            display: none;
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 16px rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .search-menu input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            background-color: #ffffff;
+            box-sizing: border-box;
+        }
+        .search-menu button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #5b2a8a;
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        /* Estilo do modal de postagem */
+     /* Estilo global */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+/* Estilo do modal de postagem */
+/* Estilo do botão de abertura do modal */
+.open-post-modal {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #5b2a8a;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.open-post-modal:hover {
+    background-color: #4a1b6a;
+    transform: scale(1.05);
+}
+
+/* Estilo do modal de postagem */
+.post-modal {
+    display: none; /* Garantir que o modal esteja invisível ao carregar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Fundo escurecido com opacidade */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garantir que fique acima de outros elementos */
+}
+
+.post-modal-content {
+    background: #fff;
+    border-radius: 12px; /* Bordas arredondadas */
+    padding: 30px;
+    width: 90%;
+    max-width: 700px; /* Largura aumentada para mais espaço */
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Sombra mais forte */
+    position: relative; /* Para posicionar o botão de fechar */
+}
+
+/* Estilo do título no modal de postagem */
+.post-modal-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #5b2a8a;
+    border-bottom: 2px solid #5b2a8a;
+    padding-bottom: 10px;
+}
+
+/* Estilo dos campos de entrada e texto */
+.post-modal-content input[type="file"],
+.post-modal-content textarea {
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.post-modal-content textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+/* Estilo dos botões */
+.post-modal-content button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #5b2a8a;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-modal-content button:hover {
+    background-color: #4a1b6a;
+    transform: translateY(-2px);
+}
+
+.post-modal-content button.cancel {
+    background-color: #888;
+}
+
+.post-modal-content button.cancel:hover {
+    background-color: #666;
+}
+
+/* Botão de fechar no modal */
+.post-modal-content .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ddd;
+    color: #333;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-modal-content .close-btn:hover {
+    background-color: #ccc;
+    transform: scale(1.1);
+}
+
+        /* Estilo do modal de notificações */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.notification-modal {
+    display: none;
+    position: fixed; /* Fixa o modal na tela */
+    top: 50%; /* Centraliza verticalmente */
+    right: 50%; /* Centraliza horizontalmente */
+    transform: translate(50%, -50%); /* Ajusta para centralizar corretamente */
+    width: 360px; /* Largura ajustada para se encaixar melhor na tela */
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    box-sizing: border-box;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+.notification-modal h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #5b2a8a; /* Cor do texto do título */
+    border-bottom: 2px solid #5b2a8a;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.notification {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    background-color: #f9f9f9; /* Cor de fundo das notificações */
+}
+
+.notification:last-child {
+    border-bottom: none;
+}
+
+.notification p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.notification time {
+    display: block;
+    color: #888;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Estilo do botão de fechar */
+.notification-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #5b2a8a;
+}
+
+.notification-modal .close-btn:hover {
+    color: #333;
+}
+
+        /* Estilo do modal de comunidade */
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.community-modal {
+    display: none;
+    position: fixed; /* Usar fixed para garantir que fique fixo na tela */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza o modal */
+    width: 80%;
+    max-width: 1200px;
+    background: #fff;
+    border: 1px solid #5b2a8a;
+    border-radius: 10px; /* Adiciona bordas arredondadas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    box-sizing: border-box;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1000; /* Assegura que o modal fique acima de outros elementos */
+}
+
+.community-modal h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #5b2a8a;
+    border-bottom: 2px solid #5b2a8a;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.community-tabs {
+    display: flex;
+    border-bottom: 2px solid #5b2a8a;
+    margin-bottom: 20px;
+}
+
+.community-tabs button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #f8f8f8;
+    color: #333;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.community-tabs button.active {
+    background: #5b2a8a;
+    color: #fff;
+}
+
+.community-tabs button:hover {
+    background: #eaeaea;
+}
+
+.community-content {
+    display: none;
+}
+
+.community-content.active {
+    display: block;
+}
+
+.community-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #e1e1e1;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.community-item:last-child {
+    border-bottom: none;
+}
+
+.community-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.community-item p {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.community-item time {
+    display: block;
+    color: #999;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.community-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #5b2a8a;
+}
+
+.community-modal .close-btn:hover {
+    color: #333;
+}
+
+    </style>
+    <!-- Inclua o Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="screen">
+        <div class="top-bar">
+            <div class="profile-button" onclick="toggleMenu()"></div>
+            <div class="menu-container">
+                <span>Para você</span>
+                <span>Seguindo</span>
+            </div>
+        </div>
+
+        <div class="menu" id="dropdownMenu">
+            <a href="musica.html">Música</a>
+            <a href="filme.html">Filme</a>
+            <a href="arted.html">Artes digitais</a>
+            <a href="artef.html">Artes Físicas</a>
+            <a href="foto.html">Fotografias</a>
+            <a href="perfil.html">Perfil</a>
+        </div>
+
+        <div class="video-grid">
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 1">
+                <div class="video-actions">
+                    <i class="fas fa-thumbs-up" title="Curtir"></i>
+                    <i class="fas fa-bookmark" title="Salvar"></i>
+                    <i class="fas fa-users" title="Comunidade" onclick="toggleCommunityModal()"></i>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 2">
+                <div class="video-actions">
+                    <i class="fas fa-thumbs-up" title="Curtir"></i>
+                    <i class="fas fa-bookmark" title="Salvar"></i>
+                    <i class="fas fa-users" title="Comunidade" onclick="toggleCommunityModal()"></i>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 3">
+                <div class="video-actions">
+                    <i class="fas fa-thumbs-up" title="Curtir"></i>
+                    <i class="fas fa-bookmark" title="Salvar"></i>
+                    <i class="fas fa-users" title="Comunidade" onclick="toggleCommunityModal()"></i>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 4">
+                <div class="video-actions">
+                    <i class="fas fa-thumbs-up" title="Curtir"></i>
+                    <i class="fas fa-bookmark" title="Salvar"></i>
+                    <i class="fas fa-users" title="Comunidade" onclick="toggleCommunityModal()"></i>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 5">
+                <div class="video-actions">
+                    <i class="fas fa-thumbs-up" title="Curtir"></i>
+                    <i class="fas fa-bookmark" title="Salvar"></i>
+                    <i class="fas fa-users" title="Comunidade" onclick="toggleCommunityModal()"></i>
+                </div>
+            </div>
+            <div class="video">
+                <img src="https://via.placeholder.com/480x270" alt="Thumbnail 6">
+                <div class="video-actions">
+                    <i class="fas fa-thumbs-up" title="Curtir"></i>
+                    <i class="fas fa-bookmark" title="Salvar"></i>
+                    <i class="fas fa-users" title="Comunidade" onclick="toggleCommunityModal()"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <i class="fas fa-home"></i>
+            <i class="fas fa-search" onclick="toggleSearchMenu()"></i>
+            <i class="fas fa-plus" onclick="togglePostModal()"></i>
+            <i class="fas fa-bell" onclick="toggleNotificationModal()"></i>
+            <i class="fas fa-comments" onclick="toggleCommunityModal()"></i>
+        </div>
+
+        <!-- Menu de Busca -->
+        <div class="search-menu" id="searchMenu">
+            <input type="text" placeholder="Pesquisar...">
+            <button type="button" onclick="search()">Buscar</button>
+        </div>
+
+        <!-- Modal de Postagem -->
+        <div class="post-modal" id="postModal">
+            <div class="post-modal-content">
+                <h2>Adicionar Postagem</h2>
+                <input type="file" id="postFile">
+                <textarea placeholder="Digite uma legenda..."></textarea>
+                <button onclick="submitPost()">Postar</button>
+                <button class="cancel" onclick="togglePostModal()">Cancelar</button>
+            </div>
+        </div>
+        
+
+        <!-- Modal de Notificações -->
+        <div class="notification-modal" id="notificationModal">
+            <h2>Notificações</h2>
+            <div class="notification">
+                <p><strong>Usuário1</strong> comentou em seu vídeo</p>
+                <time>10 minutos atrás</time>
+            </div>
+            <div class="notification">
+                <p><strong>Usuário2</strong> curtiu seu vídeo</p>
+                <time>1 hora atrás</time>
+            </div>
+            <div class="notification">
+                <p><strong>Usuário3</strong> seguiu você</p>
+                <time>3 horas atrás</time>
+            </div>
+            <div class="notification">
+                <p><strong>Usuário3</strong> seguiu você</p>
+                <time>3 horas atrás</time>
+            </div>
+            <!-- Adicione mais notificações aqui se necessário -->
+        </div>
+
+        <!-- Modal de Comunidade -->
+        <div class="community-modal" id="communityModal">
+            <h2>Comunidade</h2>
+            <div class="community-tabs">
+                <button class="active" onclick="showCommunityTab('groups')">Grupos</button>
+                <button onclick="showCommunityTab('friends')">Amigos</button>
+            </div>
+            <div class="community-content active" id="groupsTab">
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Grupo 1">
+                    <p><strong>Grupo1</strong> - Discussões sobre filmes</p>
+                    <time>10 minutos atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Grupo 2">
+                    <p><strong>Grupo2</strong> - Fotografia Avançada</p>
+                    <time>1 hora atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Grupo 3">
+                    <p><strong>Grupo3</strong> - Música Indie</p>
+                    <time>3 horas atrás</time>
+                </div>
+                <!-- Adicione mais grupos aqui se necessário -->
+            </div>
+            <div class="community-content" id="friendsTab">
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Usuário 1">
+                    <p><strong>Usuário1</strong> comentou em seu vídeo</p>
+                    <time>10 minutos atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Usuário 2">
+                    <p><strong>Usuário2</strong> curtiu seu vídeo</p>
+                    <time>1 hora atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Usuário 3">
+                    <p><strong>Usuário3</strong> seguiu você</p>
+                    <time>3 horas atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Usuário 3">
+                    <p><strong>Usuário3</strong> seguiu você</p>
+                    <time>3 horas atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Usuário 3">
+                    <p><strong>Usuário3</strong> seguiu você</p>
+                    <time>3 horas atrás</time>
+                </div>
+                <div class="community-item">
+                    <img src="https://via.placeholder.com/40" alt="Usuário 3">
+                    <p><strong>Usuário3</strong> seguiu você</p>
+                    <time>3 horas atrás</time>
+                </div>
+                <!-- Adicione mais amigos aqui se necessário -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função genérica para alternar visibilidade de elementos
+        function toggleVisibility(id, displayType = 'block') {
+            var element = document.getElementById(id);
+            element.style.display = element.style.display === displayType ? 'none' : displayType;
+        }
+    
+        // Alternar o menu dropdown
+        function toggleMenu() {
+            toggleVisibility('dropdownMenu');
+        }
+    
+        // Alternar o menu de busca
+        function toggleSearchMenu() {
+            toggleVisibility('searchMenu');
+        }
+    
+        // Alternar o modal de postagem
+        function togglePostModal() {
+            toggleVisibility('postModal', 'flex');
+        }
+    
+        // Alternar o modal de notificações
+        function toggleNotificationModal() {
+            toggleVisibility('notificationModal');
+        }
+    
+        // Alternar o modal de comunidades
+        function toggleCommunityModal() {
+            toggleVisibility('communityModal');
+        }
+    
+        // Exibir a aba correta no modal de comunidade
+        function showCommunityTab(tab) {
+            var tabs = document.querySelectorAll('.community-tabs button');
+            tabs.forEach(function(button) {
+                button.classList.remove('active');
+            });
+            
+            // Remover a aba ativa anterior
+            document.querySelector('.community-content.active').classList.remove('active');
+            
+            // Adicionar a nova aba ativa
+            document.getElementById(tab + 'Tab').classList.add('active');
+            document.querySelector('.community-tabs button.' + tab).classList.add('active');
+        }
+    
+        // Função de busca (pode ser aprimorada para interagir com o backend)
+        function search() {
+            var searchInput = document.querySelector('#searchMenu input[type="text"]').value;
+            if (searchInput) {
+                console.log('Buscando por: ' + searchInput);
+                // Exiba a busca no console ao invés de um alerta intrusivo
+            }
+        }
+    
+        // Enviar uma postagem (pode ser aprimorada para envio real de dados)
+        function submitPost() {
+            var postFile = document.getElementById('postFile').files[0];
+            var caption = document.querySelector('.post-modal-content textarea').value;
+            
+            if (postFile && caption) {
+                console.log('Postando arquivo: ' + postFile.name + ' com legenda: ' + caption);
+                // Exiba no console para evitar o uso de alert
+            } else {
+                alert('Por favor, insira um arquivo e uma legenda.');
+            }
+        }
+    
+        // Fechar modais ao clicar fora deles
+        window.addEventListener('click', function(e) {
+            var postModal = document.getElementById('postModal');
+            if (e.target === postModal) {
+                postModal.style.display = 'none'; // Fecha o modal de postagem ao clicar fora
+            }
+    
+            var notificationModal = document.getElementById('notificationModal');
+            if (e.target === notificationModal) {
+                notificationModal.style.display = 'none'; // Fecha o modal de notificações ao clicar fora
+            }
+    
+            var communityModal = document.getElementById('communityModal');
+            if (e.target === communityModal) {
+                communityModal.style.display = 'none'; // Fecha o modal de comunidades ao clicar fora
+            }
+        });
+    </script>
+    
+    </body>
+    </html>
+    
